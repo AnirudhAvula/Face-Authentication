@@ -1,0 +1,35 @@
+/* Login.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and borders are included in width/height */
+}
+
+.video-background {
+    position: fixed; /* Fixes the video in place */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    overflow:hidden; /* Prevent overflow */
+    z-index: -1; /* Place behind other content */
+}
+/* Video styling */
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%; /* Minimum width to cover the viewport */
+    height: 100%; /* Minimum height to cover the viewport */
+    object-fit: cover; /* Cover the entire area while preserving aspect ratio */
+}
+.container {
+    position: relative; /* Ensure container is positioned above video */
+    max-width: 400px; /* Set a max width for the form */
+    margin: 0 auto; /* Center the form on the page */
+    padding: 20px; /* Add padding inside the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    background-color: rgba(255, 255, 255, 0.9); /* White background with transparency for better visibility */
+
+}

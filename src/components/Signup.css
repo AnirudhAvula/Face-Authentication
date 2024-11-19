@@ -1,0 +1,64 @@
+/* General Container Styling */
+.container {
+    max-width: 400px; /* Set a max width for the form */
+    margin: 50px auto; /* Center the form on the page */
+    padding: 20px; /* Add padding inside the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    background-color: #ffffff; /* White background for the form */
+  }
+  
+  /* Heading Styling */
+  h1 {
+    font-size: 24px; /* Increase font size for the heading */
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Space below the heading */
+  }
+  
+  /* Form Element Styling */
+  .form-label {
+    font-weight: bold; /* Make labels bold */
+  }
+  
+  .form-control {
+    border: 1px solid #ced4da; /* Light border color */
+    border-radius: 5px; /* Rounded corners for inputs */
+    padding: 10px; /* Padding inside inputs */
+    width: 100%; /* Full width of the container */
+  }
+  
+  /* Focus State for Inputs */
+  .form-control:focus {
+    border-color: #007bff; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0,123,255,.5); /* Add shadow on focus */
+  }
+  
+  /* Button Styling */
+  .btn {
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside button */
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color for button */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .btn-primary.disabled {
+    background-color: #6c757d; /* Gray when disabled */
+  }
+  
+  /* Error Message Styling */
+  .alert {
+    margin-top: 15px; /* Space above error message */
+  }
+  
+  .alert-danger {
+    color: #721c24; /* Text color for error messages */
+    background-color: #f8d7da; /* Light red background for errors */
+    border-color: #f5c6cb; /* Border color for error messages */
+  }
