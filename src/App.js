@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard';
 import IndividualReg  from './components/IndividualReg';
 import AuthenticationCard from './components/AuthenticationCard';
 import Navbar from './components/Navbar';
+import AuthenticationCardCNN from './components/AuthenticationCardCNN';
+import IndividualRegCNN from './components/IndividualRegCNN';
 
 
 function App() {
@@ -43,7 +45,9 @@ function App() {
       <Route path='/login' element={<Login showAlert={showAlert} onLogin={handleLogin}/>}/>
       <Route path='/' element={<Dashboard />}/>
       <Route path='/individualregistration' element={<IndividualReg/>}/>
+      <Route path='/individualregistrationcnn' element={<IndividualRegCNN/>}/>
       <Route path='/individualauthentication' element={<AuthenticationCard/>}/>
+      <Route path='/individualauthenticationcnn' element={<AuthenticationCardCNN/>}/>
     </Routes>
     </BrowserRouter>
     

@@ -23,6 +23,7 @@ const IndividualReg = () => {
         }
     };
 
+
     // Stop the video stream
     const stopVideo = () => {
         if (videoRef.current && videoRef.current.srcObject) {

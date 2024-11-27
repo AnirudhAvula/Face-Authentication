@@ -9,10 +9,17 @@ const Dashboard = () => {
 const handleIndiRegister =()=>{
  navigate('/individualregistration')   
 }
+const handleIndiRegisterCNN =()=>{
+ navigate('/individualregistrationcnn')   
+}
 
 const handleIndiAuth =()=>{
     navigate('/individualauthentication')   
    }
+
+const handleIndiAuthCNN = ()=>{
+    navigate('/individualauthenticationcnn')
+}
 
     
   return (
@@ -32,7 +39,10 @@ const handleIndiAuth =()=>{
                         style={{ width: '120px', height: '120px' }}
                     />
                     <button className="btn btn-primary m-2" onClick={handleIndiRegister}>Register</button>
+                    <button className="btn btn-dark m-2" onClick={handleIndiRegisterCNN}>Register using our custom model</button>
                     <button className="btn btn-secondary m-2" onClick={handleIndiAuth}>Verify</button>
+                    <button className="btn btn-dark m-2" onClick={handleIndiAuthCNN}>Verify using our custom model</button>
+                    
                 </div>
             </div>
         </div>
