@@ -21,6 +21,10 @@ const handleIndiAuthCNN = ()=>{
     navigate('/individualauthenticationcnn')
 }
 
+const handleGroupAuth =()=>{
+    navigate('/groupauthentication')
+}
+
     
   return (
     <>
@@ -58,8 +62,8 @@ const handleIndiAuthCNN = ()=>{
                         className="rounded-circle mb-3"
                         style={{ width: '120px', height: '120px' }}
                     />
-                    <button className="btn btn-primary m-2">Register</button>
-                    <button className="btn btn-secondary m-2">Verify</button>
+                    
+                    <button onClick={handleGroupAuth} className="btn btn-outline-success m-2">Verify</button>
                 </div>
             </div>
         </div>

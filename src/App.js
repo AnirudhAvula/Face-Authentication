@@ -10,6 +10,7 @@ import AuthenticationCard from './components/AuthenticationCard';
 import Navbar from './components/Navbar';
 import AuthenticationCardCNN from './components/AuthenticationCardCNN';
 import IndividualRegCNN from './components/IndividualRegCNN';
+import GroupAuthentication from './components/GroupAuthentication';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
       <Route path='/individualregistrationcnn' element={<IndividualRegCNN/>}/>
       <Route path='/individualauthentication' element={<AuthenticationCard/>}/>
       <Route path='/individualauthenticationcnn' element={<AuthenticationCardCNN/>}/>
+      <Route path='/groupauthentication' element={<GroupAuthentication/>}/>
     </Routes>
     </BrowserRouter>
     

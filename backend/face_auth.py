@@ -4,6 +4,7 @@ import numpy as np
 import base64
 import io
 from PIL import Image
+from facenet_pytorch import MTCNN  
 import cv2
 from flask_cors import CORS
 import tensorflow as tf
@@ -21,6 +22,8 @@ cors_config = {
 CORS(app, resources={
     r"/*": cors_config  # Apply the above config to all routes
 })
+# Initialize MTCNN for face detection
+mtcnn = MTCNN(keep_all=True)
 
 # Initialize FaceNet pretrained
 embedder = FaceNet()
@@ -56,6 +59,41 @@ def generate_embedding():
         # Return embedding
         return jsonify({"faceDetected": True, "embedding": embedding.tolist()}), 200
 
+    except Exception as e:
+        return jsonify({"error": "An error occurred while processing the frame", "details": str(e)}), 500
+    
+
+@app.route('/generate-embedding-group', methods=['POST'])
+def generate_embedding_group():
+    try:
+        data = request.get_json()
+        frame_data = data.get("frame")
+
+        # Decode the base64 frame
+        img_bytes = base64.b64decode(frame_data.split(",")[1])
+        img = Image.open(io.BytesIO(img_bytes))
+        frame = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+
+        # Detect faces using MTCNN
+        boxes, _ = mtcnn.detect(frame)
+        if boxes is None or len(boxes) == 0:
+            return jsonify({"faceDetected": False, "message": "No faces detected"}), 200
+
+        # Loop through each detected face
+        for box in boxes:
+            x1, y1, x2, y2 = map(int, box)
+            face = frame[y1:y2, x1:x2]
+
+            # Preprocess face for FaceNet
+            face = cv2.resize(face, (160, 160))  # Resize to FaceNet input size
+            face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)  # Convert to RGB
+            embedding = embedder.embeddings([face])[0]  # Generate embedding
+
+            # Return embedding for this face
+            return jsonify({"faceDetected": True, "embedding": embedding.tolist()}), 200
+
+        # If no embeddings processed (unlikely), send an error
+        return jsonify({"error": "No embeddings processed"}), 500
     except Exception as e:
         return jsonify({"error": "An error occurred while processing the frame", "details": str(e)}), 500
 
