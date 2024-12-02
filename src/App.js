@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Alert from './components/Alert';
@@ -39,8 +39,8 @@ function App() {
     <>
     <BrowserRouter>
     <Alert alert = {alert} />
+    <Layout onLogout={handleLogout}>
     {/* { window.location.pathname !== '/signup' && window.location.pathname !== '/login'&& <Navbar />} */}
-    {window.location.pathname !== '/signup' && window.location.pathname !== '/login'&& isLoggedIn && <Navbar onLogout={handleLogout} />}
     <Routes>
       <Route path='/signup' element={<Signup showAlert={showAlert}/>}/>
       <Route path='/login' element={<Login showAlert={showAlert} onLogin={handleLogin}/>}/>
@@ -51,10 +51,22 @@ function App() {
       <Route path='/individualauthenticationcnn' element={<AuthenticationCardCNN/>}/>
       <Route path='/groupauthentication' element={<GroupAuthentication/>}/>
     </Routes>
+    </Layout>
     </BrowserRouter>
     
     </>
   );
 }
+
+function Layout({onLogout,children}){
+  const location= useLocation()
+  return(
+    <>
+    {location.pathname !== '/signup' && location.pathname !== '/login' && <Navbar onLogout={onLogout} />}
+    {children}
+  </>
+  )
+}
+
 
 export default App;

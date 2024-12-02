@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from keras_facenet import FaceNet
 import numpy as np
 import base64
@@ -9,6 +9,8 @@ import cv2
 from flask_cors import CORS
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from io import BytesIO
+import pandas as pd
 
 app = Flask(__name__)  # Fix incorrect naming convention
 CORS(app)
@@ -123,6 +125,7 @@ def generate_embedding_cnn():
 
      except Exception as e:
         return jsonify({"error": "An error occurred while processing the frame", "details": str(e)}), 500
+
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 // import './Authentication.css'; // Import your CSS file
+import { saveAs } from "file-saver";
+
 
 const Authentication = () => {
     const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -117,6 +119,13 @@ const Authentication = () => {
         return () => clearInterval(interval); // Cleanup on unmount
     }, [capturing]);
 
+
+
+
+
+
+
+
     return (
         <div className="container my-5">
             <h1 className="text-center">Face Authentication</h1>
@@ -132,6 +141,7 @@ const Authentication = () => {
                         <button onClick={stopAuthentication} disabled={!isAuthenticating} className="btn btn-danger">
                             Stop Authentication
                         </button>
+                        
                     </div>
                     <h3 className="mt-3">{identifiedPerson ? `Identified: ${identifiedPerson}` : ""}</h3>
                     <p>{message}</p>

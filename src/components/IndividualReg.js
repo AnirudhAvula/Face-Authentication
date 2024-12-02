@@ -7,6 +7,10 @@ const IndividualReg = () => {
     const [frameCount, setFrameCount] = useState(0);
     const [status, setStatus] = useState("");
     const [name, setName] = useState("");
+    const [rollno, setRollno] = useState("");
+    const [year, setYear] = useState("");
+    const [branch, setBranch] = useState("");
+    const [section, setSection] = useState("");
 
     // Start the video stream
     const startVideo = async () => {
@@ -50,6 +54,16 @@ const IndividualReg = () => {
         if (!name) {
             alert("Please enter a name");
             return;
+        }else if (!rollno) {
+            alert("Please enter a roll number");
+            return;
+        }else if (!branch) {
+            alert("Please enter your Branch!");
+            return;
+        } else if(!section){
+            alert("Please Enter your Section!!")
+        } else if(!year){
+            alert("Please Enter your year!!")
         }
 
         setIsRegistering(true);
@@ -101,7 +115,7 @@ const IndividualReg = () => {
             return;
         }
 
-        const requestBody = { name, embeddings };
+        const requestBody = { name,rollno,year,branch,section, embeddings };
         console.log("Sending request with body:", requestBody);
 
         try {
@@ -146,6 +160,38 @@ const IndividualReg = () => {
                         placeholder="Enter name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        disabled={isRegistering}
+                        className="form-control mb-3"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter Roll Number:"
+                        value={rollno}
+                        onChange={(e) => setRollno(e.target.value)}
+                        disabled={isRegistering}
+                        className="form-control mb-3"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter Year:"
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                        disabled={isRegistering}
+                        className="form-control mb-3"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter your Branch:"
+                        value={branch}
+                        onChange={(e) => setBranch(e.target.value)}
+                        disabled={isRegistering}
+                        className="form-control mb-3"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter your Section:"
+                        value={section}
+                        onChange={(e) => setSection(e.target.value)}
                         disabled={isRegistering}
                         className="form-control mb-3"
                     />

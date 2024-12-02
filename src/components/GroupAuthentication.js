@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import React, { useRef, useState, useEffect } from "react";
 // import './Authentication.css'; // Import your CSS file
@@ -45,6 +47,29 @@ const GroupAuthentication = () => {
         setMessage("Authentication stopped.");
         setCapturing(false);
         stopVideo();
+    };
+    const exportToExcel = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/api/face/export-excel", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem("token"),
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Failed to export. Server responded with: ${response.statusText}`);
+            }
+            const blob = await response.blob();
+    
+            // Use the saveAs function to download the file
+            const fileName = `Identified_Persons_${new Date().toISOString()}.xlsx`;
+            saveAs(blob, fileName);
+        } catch (error) {
+            console.error("Error exporting to Excel:", error);
+            setMessage("Error occurred while exporting.");
+        }
     };
 
     // Capture a frame and send it to the Flask server
@@ -133,6 +158,10 @@ const GroupAuthentication = () => {
                         <button onClick={stopAuthentication} disabled={!isAuthenticating} className="btn btn-danger">
                             Stop Authentication
                         </button>
+                        {/* <button onClick={} className="export-button">
+                        Export Identified Persons
+                        </button> */}
+                        <i class="fa-solid fa-download" onClick={exportToExcel}></i>
                     </div>
                     <h3 className="mt-3">{identifiedPerson ? `Identified: ${identifiedPerson}` : ""}</h3>
                     <p>{message}</p>
