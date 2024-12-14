@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Face Authentication System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a **Face Authentication System** designed for secure user authentication, individual face registration, group verification, and crowd analysis. It leverages **deep learning** and **computer vision** techniques within a **MERN stack** architecture for efficient and scalable performance.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+1. **User Authentication**:
+   - Secure signup and login system with JWT-based authentication.
+   - Each user can manage their personal database of face embeddings.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Individual Face Registration**:
+   - Capture face images and generate embeddings using a Python microservice.
+   - Store embeddings in MongoDB associated with the logged-in user.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Face Authentication**:
+   - Real-time identification and authentication of registered faces.
+   - Display identified person's name and other details.
 
-### `npm test`
+4. **Group Verification**:
+   - Authenticate multiple individuals at once.
+   - Export identified persons' details (e.g., roll number, class, section, year) to an Excel file.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. **Crowd Analysis**:
+   - Detect and count faces in large gatherings using YOLO for detection.
+  
+6.  **User Authentication History**:
+   - User can check the details of people who got authenticated and the time of their authentication.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Architecture
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
+- **Node.js**:
+  - Handles user authentication, database management, and communication with the frontend.
+  - Implements RESTful APIs for registration, authentication, and crowd analysis.
+- **MongoDB**:
+  - Stores user data and face embeddings.
+- **Middleware**:
+  - JWT-based middleware to secure routes and verify user identity.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Python Microservice
+- **Flask**:
+  - Processes images for face detection and generates embeddings.
+  - Communicates with the frontend for real-time feedback.
+- **Deep Learning**:
+  - Uses Haar cascades, YOLO, and other models for face detection and embedding generation.
 
-### `npm run eject`
+### Frontend
+- **React.js**:
+  - User-friendly interface for registration, authentication, and crowd analysis.
+  - Real-time display of identified faces and details.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Installation and Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites
+- Node.js
+- MongoDB
+- Python (with Flask and required libraries)
+- React.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Steps
 
-## Learn More
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-repo/face-authentication.git
+   cd face-authentication
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. **Setup Backend**:
+   ```bash
+   cd backend
+   npm install
+   node index.js
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. **Setup Python Microservice**:
+```bash
+  cd backend
+  python face_auth.py
+```
+Install all the required modules
 
-### Code Splitting
+   ```bash
+   cd yolo
+   pip install -r requirements.txt
+   python app.py
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Register a User**:
+   - Signup with email and password.
 
-### Making a Progressive Web App
+2. **Add Faces**:
+   - Register individual faces with names.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. **Authenticate Faces**:
+   - Authenticate registered faces in real-time.
 
-### Advanced Configuration
+4. **Group Verification**:
+   - Verify multiple individuals and export their details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+5. **Crowd Analysis**:
+   - Detect and count faces in a crowd.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Technologies Used
 
-### `npm run build` fails to minify
+- **Frontend**: React.js, CSS
+- **Backend**: Node.js, Express.js, MongoDB
+- **Python Microservice**: Flask, OpenCV, NumPy
+- **Deep Learning**: Haar cascades, YOLO, MTCNN
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+
