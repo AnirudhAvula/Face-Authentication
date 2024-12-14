@@ -1,0 +1,189 @@
+/* Register Container */
+.register-container {
+    min-height: 100vh; /* Full viewport height */
+    padding: 20px;
+    margin: 0;
+    background-image: url('../images/authenticatebg.avif'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-attachment: fixed; 
+    color: #fff; /* Set the text color for the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Center content vertically and horizontally */
+}
+
+/* Register Heading (Label Style) */
+.register-heading {
+    font-size: 1.4rem; /* Slightly larger for better visibility */
+    font-weight: 600; /* Medium weight for stronger emphasis */
+    color: #fff; /* Light text color for contrast */
+    text-align: center; /* Center the heading */
+    text-transform: uppercase; /* Uppercase for a formal label effect */
+    letter-spacing: 2px; /* Spacing for more distinct separation */
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background behind heading */
+    padding: 12px 20px; /* Add padding to make it stand out */
+    border-radius: 25px; /* Rounded corners */
+    margin-bottom: 20px; /* Add margin below to separate from the card */
+    width: 80%; /* Make it responsive */
+    max-width: 300px; /* Limit the width for better alignment */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Soft shadow for emphasis */
+}
+
+/* Card Styling */
+/* Card Styling */
+/* Card Container */
+.register-card {
+    margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker for better contrast */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* Card Body */
+.register-card-body {
+    padding: 20px;
+}
+
+/* Input Group Styling */
+.register-input-group {
+    margin-bottom: 15px;
+}
+
+/* Input Styling */
+.register-input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    background-color: #ffffff; /* White background */
+    color: #333; /* Dark text */
+    transition: border-color 0.3s ease;
+}
+
+.register-input:focus {
+    border-color: #007bff; /* Highlighted border */
+    outline: none;
+}
+
+/* Video Styling */
+.register-video-container {
+    margin-top: 20px;
+}
+
+.register-video {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    background-color: #000; /* Black background for fallback */
+}
+
+/* Button Container */
+.register-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Buttons */
+.register-btn {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    flex: 1; /* Equal button width */
+}
+
+.register-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.register-btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.register-btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.register-btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.register-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Status and Frame Count */
+.register-status,
+.register-frame-count {
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-heading {
+        font-size: 1.1rem; /* Adjust font size for smaller screens */
+    }
+
+    .register-card {
+        padding: 20px; /* Adjust padding on small screens */
+        width: 90%; /* Make the card take up more width */
+    }
+
+    .register-btn {
+        font-size: 1rem; /* Smaller button text */
+        padding: 8px 15px; /* Adjust button padding */
+        width: 48%; /* Keep button width responsive */
+    }
+
+    .register-video {
+        width: 100%; /* Full-width video element */
+    }
+
+    .register-status,
+    .register-frame-count {
+        font-size: 1rem; /* Adjust text size */
+    }
+}
+
+@media (max-width: 480px) {
+    .register-heading {
+        font-size: 1rem; /* Even smaller font size */
+    }
+
+    .register-card {
+        width: 95%; /* Card takes almost full width */
+        max-width: none;
+        padding: 15px; /* Further reduce padding */
+    }
+
+    .register-btn {
+        font-size: 0.9rem; /* Smaller button text */
+        padding: 6px 12px; /* Adjust button padding */
+        width: 100%; /* Stack buttons vertically */
+    }
+
+    .register-buttons {
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: stretch; /* Ensure buttons stretch to full width */
+        gap: 10px; /* Space between buttons */
+    }
+}

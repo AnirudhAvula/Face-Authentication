@@ -1,7 +1,6 @@
-import { saveAs } from "file-saver";
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import './Authentication.css'; // Import your CSS file
 
 const GroupAuthentication = () => {
@@ -11,6 +10,7 @@ const GroupAuthentication = () => {
     const [personsIdentified, setPersonsIdentified] = useState([]);
     const videoRef = useRef(null);
     const [capturing, setCapturing] = useState(false);
+    const navigate = useNavigate(); 
 
     // Start webcam video stream
     const startVideo = async () => {
@@ -48,29 +48,6 @@ const GroupAuthentication = () => {
         setCapturing(false);
         stopVideo();
     };
-    const exportToExcel = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/api/face/export-excel", {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    "auth-token": localStorage.getItem("token"),
-                },
-            });
-    
-            if (!response.ok) {
-                throw new Error(`Failed to export. Server responded with: ${response.statusText}`);
-            }
-            const blob = await response.blob();
-    
-            // Use the saveAs function to download the file
-            const fileName = `Identified_Persons_${new Date().toISOString()}.xlsx`;
-            saveAs(blob, fileName);
-        } catch (error) {
-            console.error("Error exporting to Excel:", error);
-            setMessage("Error occurred while exporting.");
-        }
-    };
 
     // Capture a frame and send it to the Flask server
     const captureFrame = async () => {
@@ -80,7 +57,7 @@ const GroupAuthentication = () => {
         const context = canvas.getContext("2d");
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL("image/jpeg");
-
+    
         try {
             // Send the frame to Flask for face detection and embedding generation
             const response = await fetch("http://localhost:5001/generate-embedding-group", {
@@ -88,49 +65,70 @@ const GroupAuthentication = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ frame: dataUrl }),
             });
-
+    
             const data = await response.json();
-
-            if (!data.faceDetected) {
+    
+            if (!data.faceDetected || data.faces.length === 0) {
                 setMessage("No face detected, please adjust your position.");
                 return;
             }
-
-            // If a face is detected, send the embedding to the backend for authentication
-            const backendResponse = await fetch("http://localhost:5000/api/face/authenticate", {
+    
+            // Extract embeddings from Flask response
+            const embeddings = data.faces.map((face) => face.embedding);
+    
+            // Send all embeddings to the backend for authentication
+            const backendResponse = await fetch("http://localhost:5000/api/face/groupauthenticate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-token": localStorage.getItem("token"),
+                    "auth-token": sessionStorage.getItem("token"),
                 },
-                body: JSON.stringify({ embedding: data.embedding }),
+                body: JSON.stringify({ embeddings }),
             });
-
+    
             const result = await backendResponse.json();
+    
+            if (backendResponse.ok) {
+                const identifiedPersons = result.results.filter((r) => r.match);
+                if (identifiedPersons.length > 0) {
+                    identifiedPersons.forEach((person) => {
+                        setPersonsIdentified((prev) => {
+                            const isPersonExist = prev.some((p) => p.name === person.name);
+                            if (!isPersonExist) {
+                                const storeVerificationResponse =  fetch(
+                                    "http://localhost:5000/api/face/store-verification",
+                                    {
+                                      method: "POST",
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                        "auth-token": sessionStorage.getItem("token"), // Ensure the token is correctly set
+                                      },
+                                      body: JSON.stringify({ labelName: person.name }), // Ensure result.name has the expected value
+                                    }
+                                  );
+                                return [
+                                    ...prev,
+                                    { name: person.name, image: dataUrl },
+                                ];
+                            }
+                            return prev;
+                        });
+                    });
+                    setMessage(`Identified: ${identifiedPersons.map((p) => p.name).join(", ")}`);
+                } else {
+                    setMessage("Faces detected but not recognized.");
+                }
 
-            if (backendResponse.ok && result.name) {
-                setIdentifiedPerson(result.name);
-                setMessage(`Identified: ${result.name}`);
-
-                // Add to the identified persons list if not already present
-                setPersonsIdentified((prev) => {
-                    const isPersonExist = prev.some((person) => person.name === result.name);
-                    if (!isPersonExist) {
-                        return [
-                            ...prev,
-                            { name: result.name, image: dataUrl },
-                        ];
-                    }
-                    return prev;
-                });
+                
             } else {
-                setMessage("Face detected but not recognized.");
+                setMessage("Error in authentication.");
             }
         } catch (error) {
             console.error("Error during authentication:", error);
             setMessage("Error occurred during authentication.");
         }
     };
+    
 
     // Continuously capture frames while "capturing" is true
     useEffect(() => {
@@ -142,51 +140,67 @@ const GroupAuthentication = () => {
         }
         return () => clearInterval(interval); // Cleanup on unmount
     }, [capturing]);
+    const handleBack = () => {
+        stopVideo();
+        navigate("/Dashboard");
+    };
 
     return (
-        <div className="container my-5">
-            <h1 className="text-center">Face Authentication</h1>
-            <div className="card shadow">
-                <div className="card-body">
-                    <div className="text-center">
-                        <video ref={videoRef} width="100%" height="auto" autoPlay muted />
-                    </div>
-                    <div className="d-flex justify-content-between mt-3">
-                        <button onClick={startAuthentication} disabled={isAuthenticating} className="btn btn-success">
-                            Start Authentication
-                        </button>
-                        <button onClick={stopAuthentication} disabled={!isAuthenticating} className="btn btn-danger">
-                            Stop Authentication
-                        </button>
-                        {/* <button onClick={} className="export-button">
-                        Export Identified Persons
-                        </button> */}
-                        <i class="fa-solid fa-download" onClick={exportToExcel}></i>
-                    </div>
-                    <h3 className="mt-3">{identifiedPerson ? `Identified: ${identifiedPerson}` : ""}</h3>
-                    <p>{message}</p>
-
-                    {/* List of identified persons */}
-                    {personsIdentified.length > 0 && (
-                        <div>
-                            <h3>Persons Identified</h3>
-                            <ul className="list-group">
-                                {personsIdentified.map((person, index) => (
-                                    <li key={index} className="list-group-item d-flex align-items-center">
-                                        <img
-                                            src={person.image}
-                                            alt={person.name}
-                                            style={{ width: "50px", height: "50px", marginRight: "10px", borderRadius: "50%" }}
-                                        />
-                                        {person.name}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+        <div className="auth-container">
+            <button onClick={handleBack} className="back-button">
+                &lt; Back
+            </button>
+    <h1 className="auth-heading">Group Authentication Mtcnn</h1>
+    <div className="auth-content">
+        <div className="auth-card">
+            <div className="auth-card-body">
+                <div className="video-container">
+                    <video ref={videoRef} className="auth-video" autoPlay muted />
                 </div>
+                <div className="auth-buttons">
+                    <button 
+                        onClick={startAuthentication} 
+                        disabled={isAuthenticating} 
+                        className="auth-btn auth-btn-success"
+                    >
+                        Start Authentication
+                    </button>
+                    <button 
+                        onClick={stopAuthentication} 
+                        disabled={!isAuthenticating} 
+                        className="auth-btn auth-btn-danger"
+                    >
+                        Stop Authentication
+                    </button>
+                </div>
+                <h3 className="auth-identified-name">
+                    {identifiedPerson ? `Identified: ${identifiedPerson}` : ""}
+                </h3>
+                <p className="auth-message">{message}</p>
             </div>
         </div>
+        
+        {/* Identified Persons Section */}
+        {personsIdentified.length > 0 && (
+            <div className="identified-persons">
+                <h3 className="identified-persons-heading">Persons Identified</h3>
+                <ul className="identified-persons-list">
+                    {personsIdentified.map((person, index) => (
+                        <li key={index} className="identified-person-item">
+                            <img
+                                src={person.image}
+                                alt={person.name}
+                                className="identified-person-image"
+                            />
+                            {person.name}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
+    </div>
+</div>
+
     );
 };
 

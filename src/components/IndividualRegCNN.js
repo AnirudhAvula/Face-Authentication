@@ -1,6 +1,6 @@
 
 import React, { useRef, useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 const IndividualRegCNN = () => {
     const videoRef = useRef(null);
     const [isRegistering, setIsRegistering] = useState(false);
@@ -8,6 +8,11 @@ const IndividualRegCNN = () => {
     const [frameCount, setFrameCount] = useState(0);
     const [status, setStatus] = useState("");
     const [name, setName] = useState("");
+    const [roll_no, setroll_no] = useState("");
+    const [branch, setbranch] = useState("");
+    const [year, setyear] = useState("");
+    const [section, setsection] = useState("");
+    const navigate = useNavigate();
 
     // Start the video stream
     const startVideo = async () => {
@@ -104,14 +109,14 @@ const IndividualRegCNN = () => {
             return;
         }
 
-        const requestBody = { name, embeddings };
+        const requestBody = { name,roll_no,branch,year,section, embeddings };
 
         try {
             const response = await fetch("http://localhost:5000/api/face/register-face-cnn", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-token": localStorage.getItem("token"), // Include user token for authentication
+                    "auth-token": sessionStorage.getItem("token"), // Include user token for authentication
                 },
                 body: JSON.stringify(requestBody),
             });
@@ -139,35 +144,78 @@ const IndividualRegCNN = () => {
             stopVideo();
         };
     }, []);
+    const handleBack = () => {
+        navigate("/Dashboard"); // Navigate back to the dashboard
+    };
 
     return (
-        <div className="container my-5">
-            <h1 className="text-center">Register Face with Custom CNN</h1>
-            <div className="card">
-                <div className="card-body">
+        <div className="register-container">
+            <button onClick={handleBack} className="back-button">
+                &lt; Back
+            </button>
+            <h1 className="register-heading">Register Face</h1>
+            <div className="register-card">
+                <div className="register-card-body">
                     <input
                         type="text"
                         placeholder="Enter name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         disabled={isRegistering}
-                        className="form-control mb-3"
+                        className="register-input mb-3"
                     />
-                    <video ref={videoRef} style={{ width: "100%", height: "auto" }} muted />
+                    <input
+                        type="text"
+                        placeholder="Enter Roll_no"
+                        value={roll_no}
+                        onChange={(e) => setroll_no(e.target.value)}
+                        disabled={isRegistering}
+                        className="register-input mb-3"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter Branch"
+                        value={branch}
+                        onChange={(e) => setbranch(e.target.value)}
+                        disabled={isRegistering}
+                        className="register-input mb-3"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter year"
+                        value={year}
+                        onChange={(e) => setyear(e.target.value)}
+                        disabled={isRegistering}
+                        className="register-input mb-3"
+                        required
+                    />
+                    
+                    <input
+                        type="text"
+                        placeholder="Enter section"
+                        value={section}
+                        onChange={(e) => setsection(e.target.value)}
+                        disabled={isRegistering}
+                        className="register-input mb-3"
+                        required
+                    />
+                    <video ref={videoRef} className="register-video" muted />
                     <br />
-                    <div className="d-flex justify-content-between mt-3">
-                        <button onClick={startVideo} disabled={isRegistering} className="btn btn-success">
+                    <div className="register-buttons mt-3">
+                        <button onClick={startVideo} disabled={isRegistering} className="register-btn register-btn-success">
                             Start Camera
                         </button>
-                        <button onClick={stopVideo} disabled={isRegistering} className="btn btn-danger">
+                        <button onClick={stopVideo} disabled={isRegistering} className="register-btn register-btn-danger">
                             Stop Camera
                         </button>
                     </div>
-                    <button onClick={handleRegister} disabled={isRegistering} className="btn btn-primary mt-3">
+                    <button onClick={handleRegister} disabled={isRegistering} className="register-btn register-btn-primary mt-3">
                         Register
                     </button>
-                    <p className="mt-3">Status: {status}</p>
-                    <p>Captured Frames: {frameCount}/10</p>
+                    <p className="register-status mt-3">Status: {status}</p>
+                    <p className="register-frame-count">Captured Frames: {frameCount}/10</p>
                 </div>
             </div>
         </div>

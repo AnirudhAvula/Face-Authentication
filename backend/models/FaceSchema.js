@@ -12,21 +12,21 @@ const faceSchema = new mongoose.Schema({
         type : String,
         required :true
     },
-    rollno:{
-        type: String,
-        required: true
+    roll_no: {
+        type : String,
+        required :true
     },
-    year:{
-        type: Number,
-        required: true
+    branch: {
+        type : String,
+        required :true
     },
-    branch:{
-        type: String,
-        required: true
+    year: {
+        type : String,
+        required :true
     },
-    section:{
-        type: String,
-        required: true
+    section: {
+        type : String,
+        required :true
     },
     embedding :{
         type : Array, //Store as an array of numbers

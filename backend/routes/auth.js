@@ -5,6 +5,10 @@ const {body , validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const fetchuser = require('../middleware/fetchuser')
+const FaceEmbedding = require('../models/FaceSchema');
+const FaceEmbeddingCNN = require('../models/FaceSchemaCNN');
+
+
 
 
 JWT_SECRET = "ShhhKeepthisasecret"
@@ -132,6 +136,47 @@ router.post('/getuser', fetchuser , async (req,res)=>{
 
 
 })
+router.get('/profile', fetchuser, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password'); // Avoid returning sensitive info
+        const faceData = await FaceEmbedding.find({ user: req.user.id }).select('name -_id');
+        const labels = faceData.map((data) => data.name);
+        const PTM_faceData = await FaceEmbeddingCNN.find({ user: req.user.id }).select('name -_id');
+        const plabels = PTM_faceData.map((data) => data.name);
+
+        res.json({ user, labels, plabels });
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching profile data' });
+    }
+});
+router.put('/profile/update-name', fetchuser, async (req, res) => {
+    try {
+        const userId = req.user.id; // `auth` middleware should add `user` to req
+        const { name } = req.body;
+
+        if (!name || name.trim() === '') {
+            return res.status(400).json({ error: 'Name cannot be empty.' });
+        }
+
+        // Find user and update the name
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { name },
+            { new: true, runValidators: true } // Return the updated document
+        );
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        res.status(200).json({ message: 'Name updated successfully.', user });
+    } catch (error) {
+        console.error('Error updating name:', error.message);
+        res.status(500).json({ error: 'Server error. Please try again later.' });
+    }
+});
+
+
 
 
 

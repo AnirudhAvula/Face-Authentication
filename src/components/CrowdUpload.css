@@ -1,0 +1,353 @@
+/* Main container for the page */
+.crowd-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../images/authenticatebg.avif'); /* Use your image path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Upload container styling */
+.crowd-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers all children horizontally */
+    justify-content: center; /* Centers all children vertically */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px; /* Adjust width for better control */
+    margin: 20px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.crowd-upload-container:hover {
+    transform: translateY(-5px); /* Subtle hover effect */
+}
+
+/* Center the contents inside upload-section */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    width: 100%;
+    gap: 10px; /* Add some spacing between label and input */
+    margin-top: 15px; /* Optional margin for spacing */
+}
+
+/* File upload label styling */
+.file-upload-label {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #ddd;
+    font-weight: 600;
+}
+
+/* File input field styling */
+.file-upload-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    max-width: 350px; /* Adjust max-width to control input size */
+    transition: border 0.3s ease;
+}
+
+.file-upload-input:focus {
+    border-color: #4CAF50;
+}
+
+/* Logs section styling */
+/* Logs section styling */
+.logs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; /* Reduced padding for a smaller container */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px; /* Reduced max-width for smaller container */
+    margin: 15px; /* Reduced margin */
+    height: auto;
+}
+
+/* Logs container styling */
+.logs {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px; /* Reduced padding inside the logs container */
+    border-radius: 8px;
+    max-height: 200px; /* Smaller height for the logs */
+    overflow-y: auto;
+    color: greenyellow;
+    font-size: 0.9rem; /* Reduced font size for compact logs */
+}
+
+/* Individual log styling */
+.logs p {
+    font-size: 0.9rem; /* Reduced font size for individual logs */
+    margin: 5px 0;
+}
+
+
+/* Title styling */
+.title {
+    font-size: 1.5rem; /* Adjust font size */
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Form styling */
+
+/* Preview section styling */
+.preview-section, .response-section, .output-video-section {
+    margin-top: 30px;
+}
+
+/* Section title styling */
+.section-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #ddd;
+    font-weight: 600;
+}
+
+/* Video preview and output styling */
+.video-preview, .video-output {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Button styling */
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+}
+
+.upload-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Hover effect */
+}
+
+/* Logs section styling */
+.logs {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    color: greenyellow;
+}
+
+/* Individual log styling */
+.logs p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+/* Video link styling */
+.video-link {
+    font-size: 1.1rem;
+    color: #50d1f8;
+    text-decoration: none;
+    display: block;
+    margin-top: 15px;
+}
+
+.video-link:hover {
+    text-decoration: underline;
+}
+
+.average-detections-container {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #f0f4f8, #e9ecef);
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.average-detections-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.average-detections-container p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    margin: 0;
+}
+
+.average-detections-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0066cc;
+    text-shadow: 1px 1px 2px rgba(0, 102, 204, 0.2);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .crowd-container {
+        padding: 20px;
+    }
+
+    .crowd-upload-container,
+    .logs-section {
+        max-width: 100%;
+    }
+
+    .upload-button {
+        font-size: 1rem;
+        padding: 12px 18px;
+    }
+
+    .logs p {
+        font-size: 0.95rem;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .video-preview,
+    .video-output {
+        max-width: 90%;
+    }
+
+    .logs-section {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .crowd-container {
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .crowd-upload-container,
+    .logs-section {
+        max-width: 100%;
+    }
+
+    .upload-button {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+    }
+
+    .logs p {
+        font-size: 0.9rem;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .logs-section {
+        margin-top: 20px;
+    }
+
+    .video-preview,
+    .video-output {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .upload-button {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+
+    .logs p {
+        font-size: 0.8rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .logs-section {
+        margin-top: 20px;
+    }
+
+    /* Make buttons and inputs more touch-friendly */
+    .upload-form {
+        gap: 10px;
+    }
+
+    .crowd-container {
+        padding: 15px;
+    }
+
+    .video-preview,
+    .video-output {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .upload-button {
+        font-size: 0.75rem;
+        padding: 8px 14px;
+    }
+
+    .logs p {
+        font-size: 0.75rem;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .crowd-upload-container,
+    .logs-section {
+        padding: 15px;
+    }
+
+    .video-preview,
+    .video-output {
+        max-width: 95%;
+    }
+}

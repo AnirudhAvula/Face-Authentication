@@ -1,16 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import './IndividualReg.css';
 
 const IndividualReg = () => {
     const videoRef = useRef(null);
+    const navigate = useNavigate(); // Initialize navigate hook
     const [isRegistering, setIsRegistering] = useState(false);
-    const [capturedFrames, setCapturedFrames] = useState([]);
+    const  [capturedFrames,setCapturedFrames] = useState([]);
     const [frameCount, setFrameCount] = useState(0);
     const [status, setStatus] = useState("");
     const [name, setName] = useState("");
-    const [rollno, setRollno] = useState("");
-    const [year, setYear] = useState("");
-    const [branch, setBranch] = useState("");
-    const [section, setSection] = useState("");
+    const [roll_no, setroll_no] = useState("");
+    const [branch, setbranch] = useState("");
+    const [year, setyear] = useState("");
+    const [section, setsection] = useState("");
 
     // Start the video stream
     const startVideo = async () => {
@@ -26,7 +29,6 @@ const IndividualReg = () => {
             setStatus("Unable to access the camera. Please allow permissions.");
         }
     };
-
 
     // Stop the video stream
     const stopVideo = () => {
@@ -54,16 +56,6 @@ const IndividualReg = () => {
         if (!name) {
             alert("Please enter a name");
             return;
-        }else if (!rollno) {
-            alert("Please enter a roll number");
-            return;
-        }else if (!branch) {
-            alert("Please enter your Branch!");
-            return;
-        } else if(!section){
-            alert("Please Enter your Section!!")
-        } else if(!year){
-            alert("Please Enter your year!!")
         }
 
         setIsRegistering(true);
@@ -76,7 +68,7 @@ const IndividualReg = () => {
 
         const captureInterval = setInterval(async () => {
             if (frameCounter < 10) {
-                const frame = await captureFrame();
+                const frame = await captureFrame();  // Call captureFrame instead of captureFrames
                 if (frame) {
                     try {
                         const response = await fetch("http://localhost:5001/generate-embedding", {
@@ -105,7 +97,7 @@ const IndividualReg = () => {
                 stopVideo();
                 sendEmbeddingsToBackend(embeddings);
             }
-        }, 1000); 
+        }, 1000); // Capture frames every second
     };
 
     // Send captured embeddings to the Node.js backend
@@ -115,7 +107,7 @@ const IndividualReg = () => {
             return;
         }
 
-        const requestBody = { name,rollno,year,branch,section, embeddings };
+        const requestBody = { name,roll_no,branch,year,section, embeddings };
         console.log("Sending request with body:", requestBody);
 
         try {
@@ -123,7 +115,7 @@ const IndividualReg = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-token": localStorage.getItem("token"),
+                    "auth-token": sessionStorage.getItem("token"),
                 },
                 body: JSON.stringify(requestBody),
             });
@@ -150,66 +142,80 @@ const IndividualReg = () => {
         };
     }, []);
 
+    // Back button handler
+    const handleBack = () => {
+        navigate("/Dashboard"); // Navigate back to the dashboard
+    };
+
     return (
-        <div className="container my-5">
-            <h1 className="text-center">Register Face</h1>
-            <div className="card">
-                <div className="card-body">
+        <div className="register-container">
+            <button onClick={handleBack} className="back-button">
+                &lt; Back
+            </button>
+            <h1 className="register-heading">Register Face</h1>
+            <div className="register-card">
+                <div className="register-card-body">
                     <input
                         type="text"
                         placeholder="Enter name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         disabled={isRegistering}
-                        className="form-control mb-3"
+                        className="register-input mb-3"
+                        required
                     />
                     <input
                         type="text"
-                        placeholder="Enter Roll Number:"
-                        value={rollno}
-                        onChange={(e) => setRollno(e.target.value)}
+                        placeholder="Enter Roll_no"
+                        value={roll_no}
+                        onChange={(e) => setroll_no(e.target.value)}
                         disabled={isRegistering}
-                        className="form-control mb-3"
+                        className="register-input mb-3"
+                        required
                     />
                     <input
                         type="text"
-                        placeholder="Enter Year:"
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
-                        disabled={isRegistering}
-                        className="form-control mb-3"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Enter your Branch:"
+                        placeholder="Enter Branch"
                         value={branch}
-                        onChange={(e) => setBranch(e.target.value)}
+                        onChange={(e) => setbranch(e.target.value)}
                         disabled={isRegistering}
-                        className="form-control mb-3"
+                        className="register-input mb-3"
+                        required
                     />
                     <input
                         type="text"
-                        placeholder="Enter your Section:"
-                        value={section}
-                        onChange={(e) => setSection(e.target.value)}
+                        placeholder="Enter year"
+                        value={year}
+                        onChange={(e) => setyear(e.target.value)}
                         disabled={isRegistering}
-                        className="form-control mb-3"
+                        className="register-input mb-3"
+                        required
                     />
-                    <video ref={videoRef} style={{ width: "100%", height: "auto" }} muted />
+                    
+                    <input
+                        type="text"
+                        placeholder="Enter section"
+                        value={section}
+                        onChange={(e) => setsection(e.target.value)}
+                        disabled={isRegistering}
+                        className="register-input mb-3"
+                        required
+                    />
+                    <video ref={videoRef} className="register-video" muted />
                     <br />
-                    <div className="d-flex justify-content-between mt-3">
-                        <button onClick={startVideo} disabled={isRegistering} className="btn btn-success">
+                    <div className="register-buttons mt-3">
+                        <button onClick={startVideo} disabled={isRegistering} className="register-btn register-btn-success">
                             Start Camera
                         </button>
-                        <button onClick={stopVideo} disabled={isRegistering} className="btn btn-danger">
+                        <button onClick={stopVideo} disabled={isRegistering} className="register-btn register-btn-danger">
                             Stop Camera
                         </button>
                     </div>
-                    <button onClick={handleRegister} disabled={isRegistering} className="btn btn-primary mt-3">
+                    <button onClick={handleRegister} disabled={isRegistering} className="register-btn register-btn-primary mt-3">
                         Register
                     </button>
-                    <p className="mt-3">Status: {status}</p>
-                    <p>Captured Frames: {frameCount}/10</p>
+                    <p className="register-status mt-3">Status: {status}</p>
+                    <p className="register-frame-count">Captured Frames: {frameCount}/10</p>
                 </div>
             </div>
         </div>

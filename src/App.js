@@ -1,72 +1,135 @@
 import './App.css';
 import { useState } from 'react';
-import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Alert from './components/Alert';
 import Dashboard from './components/Dashboard';
-import IndividualReg  from './components/IndividualReg';
+import IndividualReg from './components/IndividualReg';
 import AuthenticationCard from './components/AuthenticationCard';
-import Navbar from './components/Navbar';
 import AuthenticationCardCNN from './components/AuthenticationCardCNN';
 import IndividualRegCNN from './components/IndividualRegCNN';
+import UserProfile from './components/UserProfile';
 import GroupAuthentication from './components/GroupAuthentication';
-
+import History from './components/History';
+import CrowdUpload from './components/CrowdUpload';
+import Crowdimage from './components/crowdimage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const [alert, setAlert] = useState(null)
-  const [isLoggedIn, setIsLoggedIn]=  useState(false)
-  const showAlert = (message,type) =>{
+  const [alert, setAlert] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!sessionStorage.getItem('token') // Check sessionStorage for token
+  );
+
+  const showAlert = (message, type) => {
     setAlert({
       msg: message,
-      type: type
-    })
+      type: type,
+    });
     setTimeout(() => {
       setAlert(null);
     }, 1500);
-  }
-
-  
-  const handleLogin = () => {
-    setIsLoggedIn(true); // Update login status
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false); // Update login status
+  const handleLogin = () => {
+    setIsLoggedIn(true);
   };
 
   return (
     <>
-    <BrowserRouter>
-    <Alert alert = {alert} />
-    <Layout onLogout={handleLogout}>
-    {/* { window.location.pathname !== '/signup' && window.location.pathname !== '/login'&& <Navbar />} */}
-    <Routes>
-      <Route path='/signup' element={<Signup showAlert={showAlert}/>}/>
-      <Route path='/login' element={<Login showAlert={showAlert} onLogin={handleLogin}/>}/>
-      <Route path='/' element={<Dashboard />}/>
-      <Route path='/individualregistration' element={<IndividualReg/>}/>
-      <Route path='/individualregistrationcnn' element={<IndividualRegCNN/>}/>
-      <Route path='/individualauthentication' element={<AuthenticationCard/>}/>
-      <Route path='/individualauthenticationcnn' element={<AuthenticationCardCNN/>}/>
-      <Route path='/groupauthentication' element={<GroupAuthentication/>}/>
-    </Routes>
-    </Layout>
-    </BrowserRouter>
-    
+      <BrowserRouter>
+        <Alert alert={alert} />
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Signup showAlert={showAlert} />} />
+          <Route path="/login" element={<Login showAlert={showAlert} onLogin={handleLogin} />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/Dashboard"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/individualregistration"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <IndividualReg />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/individualregistrationcnn"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <IndividualRegCNN />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/individualauthentication"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <AuthenticationCard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/individualauthenticationcnn"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <AuthenticationCardCNN />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/groupauthentication"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <GroupAuthentication />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/userprofile"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <History />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/crowd"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <CrowdUpload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/crowdimage"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <Crowdimage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
-
-function Layout({onLogout,children}){
-  const location= useLocation()
-  return(
-    <>
-    {location.pathname !== '/signup' && location.pathname !== '/login' && <Navbar onLogout={onLogout} />}
-    {children}
-  </>
-  )
-}
-
 
 export default App;

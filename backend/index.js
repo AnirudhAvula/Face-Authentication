@@ -10,7 +10,7 @@ const port = 5000;
 
 app.use(cors({
     origin: 'http://localhost:3000',//Specify frontend port
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS','DELETE','PUT'],
     //  allowedHeaders: ['Content-Type', 'auth-token'],
     optionsSuccessStatus:200
 }))

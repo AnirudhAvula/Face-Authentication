@@ -1,0 +1,452 @@
+/* Global Styles */
+* /* Global Styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Navbar */
+/* General Navbar Styling */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 1rem 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-left h1 {
+    color: #fff;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.navbar-middle {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ffd700;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between elements */
+    margin-right: 20px; /* Adjust for navbar alignment */
+}
+
+.logout-desktop {
+    display: flex;
+    align-items: center;
+}
+
+.logout-button {
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px; /* Adjust padding for better appearance */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: darkcyan; /* Slightly darker teal on hover */
+}
+
+.logout-button:active {
+    background-color: #006666; /* Deeper color when clicked */
+    transform: scale(0.98); /* Button click effect */
+}
+
+.logout-button:focus {
+    outline: 2px solid #004d4d; /* Focus effect */
+}
+
+.logout-button:disabled {
+    background-color: #cccccc; /* Disabled state */
+    cursor: not-allowed;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover .FaUserCircle {
+    opacity: 0.8; /* Slight dimming on hover */
+    transform: scale(1.05); /* Slight grow on hover */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.profile_logout{
+    display: flex;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 1rem 0;
+    z-index: 1;
+}
+
+.mobile-menu .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.mobile-menu .mobile-nav-links li a {
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .navbar-middle {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+        
+    }
+
+    .logout-desktop {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+        position: fixed;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+
+/* Hero Section */
+.home_hero_section {
+    width: 100%;
+    height: 47rem;
+    background-image: url('https://serengetitech.com/wp-content/uploads/2022/06/shutterstock_1191637648-1.png');
+    background-position: center;
+    background-size: cover;
+    color: #feffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 2rem;
+    position: relative;
+}
+
+.home_hero_section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    max-width: 700px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    color: #f0f0f0; /* Enhances readability */
+    background-color: rgba(0, 0, 0, 0.5); /* Adds a subtle background */
+    padding: 1rem; /* Adds padding around the text */
+    border-radius: 10px; /* Rounds the corners */
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.home-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+}
+
+/* Features Section */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid layout */
+    gap: 2rem;
+    padding: 4rem 2rem;
+    justify-items: center;
+    align-items: stretch;
+     /* Parallax effect */
+    color: #fff; /* White text to contrast with dark overlay */
+}
+.bacground_dashboard{
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.7), 
+        rgba(0, 0, 0, 0.7)
+    ),
+    url('https://images.unsplash.com/photo-1518770660439-4636190af475?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080');
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+}
+
+.feature-card {
+    width: 100%;
+    max-width: 320px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent card background */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow for contrast */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+}
+
+.feature-card:hover {
+    transform: scale(1.05); /* Smooth scaling effect */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+}
+
+.feature-card img {
+    width: 60%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 5px solid rgba(255, 255, 255, 0.8); /* Emphasized border */
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover img {
+    transform: scale(1.1); /* Slight enlargement on hover */
+}
+
+.feature-card h5 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: #ffffff; /* Contrasting color for the text */
+}
+
+.feature-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #e0e0e0; /* Softer white for description text */
+    margin-bottom: 1.5rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap; /* Buttons wrap on smaller screens */
+}
+
+.btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+    .features {
+        padding: 3rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .feature-card h5 {
+        font-size: 1.2rem;
+    }
+
+    .feature-card p {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+.about-section {
+    padding: 4rem 2rem;
+    
+    color: #f8fafc;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #38bdf8; /* Aqua blue for header */
+    font-family: "Orbitron", sans-serif;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.about-section p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.7;
+}
+
+.about-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.about-card {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent for a glassy look */
+    backdrop-filter: blur(10px); /* Creates a frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 2rem;
+    width: 300px;
+    max-width: 100%;
+    text-align: center;
+    color: #e2e8f0;
+}
+
+.about-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.about-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.about-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+}
+
+.about-card-icon {
+    font-size: 3rem;
+    color: #38bdf8;
+    margin-bottom: 1rem;
+}
+
+
+
+
+
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
